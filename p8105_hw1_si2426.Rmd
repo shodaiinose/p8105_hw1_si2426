@@ -42,12 +42,12 @@ problem2_df =
   )
 ```
 
-The numeric vector has a mean of `r round(problem2_df %>% pull(numvec) %>% mean(), 2)`.
-The logical vector has a mean of `r problem2_df %>% pull(logvec) %>% mean()`.
-The character vector has a mean of `r problem2_df %>% pull(charvec) %>% mean()`, which indicates a mean cannot be taken.
-The factor vector has a mean of `r problem2_df %>% pull(facvec) %>% mean()`, which indicates a mean cannot be taken.
+The numeric variable has a mean of `r round(problem2_df %>% pull(numvec) %>% mean(), 2)`.
+The logical variable has a mean of `r problem2_df %>% pull(logvec) %>% mean()`.
+The character variable has a mean of `r problem2_df %>% pull(charvec) %>% mean()`, which indicates a mean cannot be taken.
+The factor variable has a mean of `r problem2_df %>% pull(facvec) %>% mean()`, which indicates a mean cannot be taken.
 
-We are able to find the mean of the numeric and logical vectors. However, we are unable to find the means of the character and factor vectors.
+We are able to find the mean of the numeric and logical variables. However, we are unable to find the means of the character and factor variables.
 
 ```{r coercing_numeric, eval=FALSE, warning = FALSE}
 problem2_df %>% pull(logvec) %>% as.numeric()
@@ -55,4 +55,4 @@ problem2_df %>% pull(charvec) %>% as.numeric()
 problem2_df %>% pull(facvec) %>% as.numeric()
 ```
 
-The `as.numeric` function attempts to coerce variables of non-numeric types to the numeric type. For example, in the logical vector, values equal to false are assigned a numeric value of 0 while values equal to true are assigned a numeric value of 1 when we used the `as.numeric` function. R is able to use these values to calculate a mean, which is how a mean was calculated before we applied the `as.numeric` function. The factor variables are also coerced to a numeric type. In the tibble created above, values of "good" were assigned a 3, values of "bad" were assigned a 2, and values of "average" were assigned a 1. The `as.numeric` function, however, is unable to determine how several of the values in the character vector should be assigned to numeric values, resulting in missing values. While the function recognizes characters that look numeric (in the tibble above, some of the characters had values equal to "1" which R was able to recognize and assign a numeric value of 1), it is unable to determine how values such as "mango" can be coerced to a numeric type. Due to the missing values, it is not possible to compute a mean without removing them.
+The `as.numeric()` function attempts to coerce variables of non-numeric types to the numeric type. For example, in the logical vector, values equal to false are assigned a numeric value of 0 while values equal to true are assigned a numeric value of 1 when we used the `as.numeric()` function. R is able to use these values to calculate a mean, which is how a mean was calculated before we applied the `as.numeric()` function. The factor variables are also coerced to a numeric type. In the tibble created above, values of "good" were assigned a 3, values of "bad" were assigned a 2, and values of "average" were assigned a 1. The `as.numeric()` function, however, is unable to determine how several of the values in the character vector should be assigned to numeric values, resulting in missing values. While the function recognizes characters that look numeric (in the tibble above, some of the characters had values equal to "1" which R was able to recognize and assign a numeric value of 1), it is unable to determine how values such as "mango" can be coerced to a numeric type. Due to the missing values, it is not possible to compute a mean without removing them.
