@@ -1,7 +1,7 @@
 ---
-title: "P8105 HW 1"
+title: "P8105 HW 1 si2426"
 output: github_document
-date: "2022-09-21"
+date: "2022-09-23"
 ---
 
 ```{r setup, include=FALSE}
@@ -15,10 +15,10 @@ library(dplyr)
 data("penguins", package = "palmerpenguins")
 ```
 
-The data in this dataset contains "size measurements for adult foraging penguins" of three distinct species (Adélie, Chinstrap, and Gentoo) from three distinct islands (Biscoe, Dream, and Torgersen) in the Palmer Archipelago, Antarctica. The dataset contains the penguins' species, island of origin, bill length (measured in millimeters), bill depth (measured in millimeters), flipper length (measured in millimeters), body mass (measured in grams), sex, and year of study (ranging between 2007 and 2009). The heaviest penguin weighed `r max(penguins$body_mass_g %>% na.omit)/1000` kg while the lightest penguin weighed `r min(penguins$body_mass_g %>% na.omit)/1000` kg. The average body weight of the penguins was `r round(mean(penguins$body_mass_g %>% na.omit)/1000, 2)` kg. The dataset contains `r nrow(penguins)` penguins and `r ncol(penguins)` variables Removing the missing values, we find that the mean flipper length is `r round(mean(penguins$flipper_length_mm %>% na.omit), 2)` mm.
+The data in this dataset contains "size measurements for adult foraging penguins" of three distinct species (Adélie, Chinstrap, and Gentoo) from three distinct islands (Biscoe, Dream, and Torgersen) in the Palmer Archipelago, Antarctica. The dataset contains the penguins' species, island of origin, bill length (measured in millimeters), bill depth (measured in millimeters), flipper length (measured in millimeters), body mass (measured in grams), sex, and year of study (ranging between 2007 and 2009). The heaviest penguin weighed `r max(penguins$body_mass_g %>% na.omit)/1000` kg while the lightest penguin weighed `r min(penguins$body_mass_g %>% na.omit)/1000` kg. The average body weight of the penguins was `r round(mean(penguins$body_mass_g %>% na.omit)/1000, 2)` kg. The dataset contains `r nrow(penguins)` penguins and `r ncol(penguins)` variables. Removing the missing values, we find that the mean flipper length is `r round(mean(penguins$flipper_length_mm %>% na.omit), 2)` mm.
 
 ```{r flipper_vs_bill_length_plot, warning = FALSE}
-flippervsbill_plot <- ggplot(penguins, aes(x=bill_length_mm, y=flipper_length_mm, color=species)) + geom_point()
+flippervsbill_plot <- ggplot(penguins, aes(x=bill_length_mm, y=flipper_length_mm, color=species)) + geom_point() + ggtitle("Flipper Length (mm) vs. Bill length (mm)")
 
 flippervsbill_plot
 ```
@@ -32,7 +32,6 @@ ggsave(filename = "flippervsbill_length_plot.pdf", flippervsbill_plot)
 set.seed(19)
 ```
 
-
 ```{r creating_tibble, warning = FALSE}
 problem2_df = 
   tibble(
@@ -43,7 +42,7 @@ problem2_df =
   )
 ```
 
-The numeric vector has a mean of `r problem2_df %>% pull(numvec) %>% mean()`.
+The numeric vector has a mean of `r round(problem2_df %>% pull(numvec) %>% mean(), 2)`.
 The logical vector has a mean of `r problem2_df %>% pull(logvec) %>% mean()`.
 The character vector has a mean of `r problem2_df %>% pull(charvec) %>% mean()`, which indicates a mean cannot be taken.
 The factor vector has a mean of `r problem2_df %>% pull(facvec) %>% mean()`, which indicates a mean cannot be taken.
