@@ -1,5 +1,5 @@
 ---
-title: "P8105 HW 1 si2426"
+title: "Data Science I (P8105) HW 1"
 output: github_document
 author: si2426
 date: "2022-09-23"
