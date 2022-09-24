@@ -1,0 +1,59 @@
+---
+title: "P8105 HW 1"
+output: github_document
+date: "2022-09-21"
+---
+
+```{r setup, include=FALSE}
+library(magrittr)
+library(tidyverse)
+library(dplyr)
+```
+
+## Problem 1
+```{r loading_penguin_data, include= FALSE}
+data("penguins", package = "palmerpenguins")
+```
+
+The data in this dataset contains "size measurements for adult foraging penguins" of three distinct species (Adélie, Chinstrap, and Gentoo) from three distinct islands (Biscoe, Dream, and Torgersen) in the Palmer Archipelago, Antarctica. The dataset contains the penguins' species, island of origin, bill length (measured in millimeters), bill depth (measured in millimeters), flipper length (measured in millimeters), body mass (measured in grams), sex, and year of study (ranging between 2007 and 2009). The heaviest penguin weighed `r max(penguins$body_mass_g %>% na.omit)/1000` kg while the lightest penguin weighed `r min(penguins$body_mass_g %>% na.omit)/1000` kg. The average body weight of the penguins was `r round(mean(penguins$body_mass_g %>% na.omit)/1000, 2)` kg. The dataset contains `r nrow(penguins)` penguins and `r ncol(penguins)` variables Removing the missing values, we find that the mean flipper length is `r round(mean(penguins$flipper_length_mm %>% na.omit), 2)` mm.
+
+```{r flipper_vs_bill_length_plot, warning = FALSE}
+flippervsbill_plot <- ggplot(penguins, aes(x=bill_length_mm, y=flipper_length_mm, color=species)) + geom_point()
+
+flippervsbill_plot
+```
+
+```{r saving_plot, eval = FALSE}
+ggsave(filename = "flippervsbill_length_plot.pdf", flippervsbill_plot)
+```
+
+## Problem 2
+```{r setting_seed, echo = FALSE}
+set.seed(19)
+```
+
+
+```{r creating_tibble, warning = FALSE}
+problem2_df = 
+  tibble(
+    numvec = rnorm(n=10),
+    logvec = numvec>0,
+    charvec = c("1", "mango", "guava", "1", "mint", "guava", "mint", "1", "1", "banana"),
+    facvec = factor(c("good", "bad", "average", "bad", "good", "average", "average", "bad", "average", "bad"))
+  )
+```
+
+The numeric vector has a mean of `r problem2_df %>% pull(numvec) %>% mean()`.
+The logical vector has a mean of `r problem2_df %>% pull(logvec) %>% mean()`.
+The character vector has a mean of `r problem2_df %>% pull(charvec) %>% mean()`, which indicates a mean cannot be taken.
+The factor vector has a mean of `r problem2_df %>% pull(facvec) %>% mean()`, which indicates a mean cannot be taken.
+
+We are able to find the mean of the numeric and logical vectors. However, we are unable to find the means of the character and factor vectors.
+
+```{r coercing_numeric, eval=FALSE, warning = FALSE}
+problem2_df %>% pull(logvec) %>% as.numeric()
+problem2_df %>% pull(charvec) %>% as.numeric()
+problem2_df %>% pull(facvec) %>% as.numeric()
+```
+
+The `as.numeric` function attempts to coerce variables of non-numeric types to the numeric type. For example, in the logical vector, values equal to false are assigned a numeric value of 0 while values equal to true are assigned a numeric value of 1 when we used the `as.numeric` function. R is able to use these values to calculate a mean, which is how a mean was calculated before we applied the `as.numeric` function. The factor variables are also coerced to a numeric type. In the tibble created above, values of "good" were assigned a 3, values of "bad" were assigned a 2, and values of "average" were assigned a 1. The `as.numeric` function, however, is unable to determine how several of the values in the character vector should be assigned to numeric values, resulting in missing values. While the function recognizes characters that look numeric (in the tibble above, some of the characters had values equal to "1" which R was able to recognize and assign a numeric value of 1), it is unable to determine how values such as "mango" can be coerced to a numeric type. Due to the missing values, it is not possible to compute a mean without removing them.
